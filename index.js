@@ -26,7 +26,7 @@ const { getEpoch, getRound, isWin } = require('./PancakeLib');
         {
             console.log(`Epoch : ${Epoch}`);
             console.log(`Session Closed Bet In : ${CloseBetIn}`);
-            console.log(`Session Closed In : ${CloseBetIn}`);
+            console.log(`Session Closed In : ${ClosedIn}`);
             console.log(`Percentage Bet : Bull ${PercentageBetBull}% | Bear ${PercentageBetBear}`);
             console.log("BET BEAR");
         }else if(PercentageBetBull > 50)
