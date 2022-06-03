@@ -14,9 +14,32 @@ async function getRound(roundNumber)
     let getRound = await PancakePredictionContract.methods.rounds(roundNumber).call();
     return getRound;
 }
-async function isWin(address, Epoch){
-    let getRound = await PancakePredictionContract.methods.rounds(roundNumber).call();
+async function isWin(address, roundNumber){
+    let getRound = await PancakePredictionContract.methods.claimable(roundNumber, address).call();
     return getRound;
+}
+
+async function sendTx(account, destinationContract, txData)
+{
+    const count = await web3.eth.getTransactionCount(account.address, "pending");
+    const tx = {
+        from        : account.address, 
+        to          : destinationContract, 
+        value       : '0',
+        gas         : web3.utils.numberToHex(100000),
+        gasPrice    : web3.utils.numberToHex(web3.utils.toWei('3', 'gwei')),
+        data        : txData ,
+        nonce       : count
+      }; 
+      try{
+      await web3.eth.accounts.signTransaction(tx, account.privateKey).then(tx => {
+        var rawTx = tx.rawTransaction;  
+            web3.eth.sendSignedTransaction(rawTx).on('transactionHash', (receipt) => {
+                console.log(receipt);
+            });
+        });
+    }catch(err){}
+
 }
 
 module.exports = {getEpoch, getRound, isWin};
