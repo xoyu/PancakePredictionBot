@@ -29,9 +29,7 @@ const { getEpoch, getRound, isWin, betBull, betBear, claim } = require('./Pancak
        console.log(`Session Closed In : ${ClosedIn}`);
        console.log(`Percentage Bet : Bull ${PercentageBetBull}% | Bear ${PercentageBetBear}`);
        console.log("BET BEAR");
-       try{
        await betBear(Epoch);
-       }catch(error){}
    }else if(PercentageBetBull > 50)
    {
        console.log(`Epoch : ${Epoch}`);
@@ -39,18 +37,16 @@ const { getEpoch, getRound, isWin, betBull, betBear, claim } = require('./Pancak
        console.log(`Session Closed In : ${ClosedIn}`);
        console.log(`Percentage Bet : Bull ${PercentageBetBull}% | Bear ${PercentageBetBear}`);
        console.log("BET BULL");
-       try{
        await betBull(Epoch);
-       }catch(error){}
    }
    }
 
-   if(CloseBetIn <= 30 && CloseBetIn >= 20){
+   if(CloseBetIn <= 60 && CloseBetIn >= 54){
       let account = await web3.eth.accounts.privateKeyToAccount(process.env.PRIVATE_KEY);
-      let checkWinorLose = await isWin(account.address,Epoch -1);
+      let checkWinorLose = await isWin(account.address,Epoch -2);
        console.log('Claiming!');
        if(checkWinorLose == true){
-         await claim([Epoch - 1]);
+         await claim([Epoch - 2]);
        }
    }
    }
